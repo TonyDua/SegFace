@@ -81,43 +81,42 @@ def create_gradio_interface():
         gr.Markdown("## **SegFace 推理工具 - 使用裁剪功能**")
 
         with gr.Row():
-            with gr.Column():
-                # 模型选择
-                with gr.Row():
-                    model_dropdown = gr.Dropdown(
-                        choices=["convnext_celeba_512",
-                                 "efficientnet_celeba_512",
-                                 "mobilenet_celeba_512",
-                                 "resnet_celeba_512",
-                                 "swinb_celeba_224",
-                                 "swinb_celeba_256",
-                                 "swinb_celeba_448",
-                                 "swinb_celeba_512",
-                                 "swinb_lapa_224",
-                                 "swinb_lapa_256",
-                                 "swinb_lapa_448",
-                                 "swinb_lapa_512",
-                                 "swinv2b_celeba_512"],
-                        label="选择模型",
-                        value="swinb_celeba_512"
-                    )
 
-                # 使用 ImageEditor 组件上传和裁剪图片
-                with gr.Row():
-                    input_editor = gr.ImageEditor(
-                        label="上传并裁剪图片",
-                        sources=["upload"],
-                        crop_size=(512, 512),
-                        interactive=True
-                    )
+            with gr.Row():
+                model_dropdown = gr.Dropdown(
+                    choices=["convnext_celeba_512",
+                             "efficientnet_celeba_512",
+                             "mobilenet_celeba_512",
+                             "resnet_celeba_512",
+                             "swinb_celeba_224",
+                             "swinb_celeba_256",
+                             "swinb_celeba_448",
+                             "swinb_celeba_512",
+                             "swinb_lapa_224",
+                             "swinb_lapa_256",
+                             "swinb_lapa_448",
+                             "swinb_lapa_512",
+                             "swinv2b_celeba_512"],
+                    label="选择模型",
+                    value="swinb_celeba_512"
+                )
 
-                # 推理按钮
-                with gr.Row():
-                    infer_button = gr.Button("执行推理")
+            # 使用 ImageEditor 组件上传和裁剪图片
+            with gr.Row():
+                input_editor = gr.ImageEditor(
+                    label="上传并裁剪图片",
+                    sources=["upload"],
+                    crop_size=(512, 512),
+                    interactive=True
+                )
 
-            with gr.Column():
-                # 显示推理结果
-                output_image = gr.Image(type="pil", label="推理结果")
+            # 推理按钮
+            with gr.Row():
+                infer_button = gr.Button("执行推理")
+
+        with gr.Column():
+            # 显示推理结果
+            output_image = gr.Image(type="pil", label="推理结果")
 
         # 绑定推理逻辑
         infer_button.click(infer_image, inputs=[model_dropdown, input_editor], outputs=output_image)
